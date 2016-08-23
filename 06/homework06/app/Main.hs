@@ -56,4 +56,9 @@ nats = streamFromSeed (+1) $ -1
 interleaveStream :: Stream a -> Stream a -> Stream a
 interleaveStream (Cons x xs) ys = Cons x $ interleaveStream ys xs
 
+ruler :: Stream Integer
+ruler     = rulerStart 0
+    where
+      rulerStart :: Integer -> Stream Integer
+      rulerStart y    = interleaveStream (streamRepeat y) (rulerStart $ y+1)
 
